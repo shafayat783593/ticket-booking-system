@@ -33,3 +33,10 @@ select u.user_id ,u.full_name, b.booking_id from users  u left join bookings b u
 select booking_id,match_id,total_cost from  bookings  where  total_cost > (
  select round(avg(total_cost)) from bookings
 )
+
+
+--Query 7: Answer
+
+select match_id,fixture,base_ticket_price from matches order by base_ticket_price desc
+offset(1)
+limit(2)
