@@ -4,39 +4,90 @@
 
 -- Query 1: Answer
 
-select match_id ,fixture,base_ticket_price 
-  from matches where match_status = 'Available' and tournament_category= 'Champions League'
+SELECT
+  match_id,
+  fixture,
+  base_ticket_price
+FROM
+  matches
+WHERE
+  match_status = 'Available'
+  AND tournament_category = 'Champions League'
 
 
 -- Query 2: Answer
 
-select user_id,full_name ,email from users  where (full_name Ilike 'Tanvir%' or full_name Ilike '%Haque')
 
+SELECT
+  user_id,
+  full_name,
+  email
+FROM
+  users
+WHERE
+  (
+    full_name ILIKE 'Tanvir%'
+    OR full_name ILIKE '%Haque'
+  )
 
 -- Query 3: Answer
-select booking_id,user_id,match_id, coalesce(payment_status,'Action Required') as systematic_status
-  from bookings where payment_status is null 
+
+SELECT
+  booking_id,
+  user_id,
+  match_id,
+  coalesce(payment_status, 'Action Required') AS systematic_status
+FROM
+  bookings
+WHERE
+  payment_status IS NULL
 
   -- Query 4: Answer
-
-  select b.booking_id, u.full_name, m.fixture ,b.total_cost
-  from matches m 
-  inner  join bookings b  using(match_id) 
-inner join users u  using(user_id)
+SELECT
+  b.booking_id,
+  u.full_name,
+  m.fixture,
+  b.total_cost
+FROM
+  matches m
+  INNER JOIN bookings b USING (match_id)
+  INNER JOIN users u USING (user_id)
 
 -- Query 5: Answer
 
-select u.user_id ,u.full_name, b.booking_id from users  u left join bookings b using(user_id)
+SELECT
+  u.user_id,
+  u.full_name,
+  b.booking_id
+FROM
+  users u
+  LEFT JOIN bookings b USING (user_id)
 
 -- Query 6: Answer
 
-select booking_id,match_id,total_cost from  bookings  where  total_cost > (
- select round(avg(total_cost)) from bookings
-)
-
+SELECT
+  booking_id,
+  match_id,
+  total_cost
+FROM
+  bookings
+WHERE
+  total_cost > (
+    SELECT
+      round(avg(total_cost))
+    FROM
+      bookings
+  )
 
 --Query 7: Answer
 
-select match_id,fixture,base_ticket_price from matches order by base_ticket_price desc
-offset 1
-limit 2
+SELECT
+  match_id,
+  fixture,
+  base_ticket_price
+FROM
+  matches
+ORDER BY
+  base_ticket_price DESC
+OFFSET 1
+LIMIT 2
