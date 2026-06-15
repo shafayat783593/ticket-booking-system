@@ -38,5 +38,5 @@ select booking_id,match_id,total_cost from  bookings  where  total_cost > (
 --Query 7: Answer
 
 select match_id,fixture,base_ticket_price from matches order by base_ticket_price desc
-offset(1)
-limit(2)
+offset 1
+limit 2
